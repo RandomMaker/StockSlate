@@ -1,7 +1,10 @@
 'use strict';
 
 angular.module('stockSlateApp')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MainCtrl', function ($scope, $http, Auth) {
+    $scope.isLoggedIn = Auth.isLoggedIn;
+    $scope.getCurrentUser = Auth.getCurrentUser;
+
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -19,4 +22,24 @@ angular.module('stockSlateApp')
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     };
+
+    $scope.myStockLists = [{
+      name: 'Technology Stocks',
+      stocks: []
+    }, {
+      name: 'Restaurant Stocks',
+      stocks: []
+    }, {
+      name: 'Pot Stocks',
+      stocks: []
+    }, {
+      name: 'Telecom Stocks',
+      stocks: []
+    }];
+
+    $scope.myCustomProfiles = [{
+      name: 'Value Profile'
+    }, {
+      name: 'Growth Profile'
+    }]
   });

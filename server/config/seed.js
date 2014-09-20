@@ -33,9 +33,18 @@ Thing.find({}).remove(function() {
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
-    name: 'Test User',
+    name: 'Brandon Chow',
     email: 'test@test.com',
-    password: 'test'
+    password: 'test',
+    lists: [{
+      name: 'Technology related'
+    }, {
+      name: 'Restaurants'
+    }, {
+      name: 'Pot Stocks'
+    }, {
+      name: 'Telecom'
+    }]
   }, {
     provider: 'local',
     role: 'admin',
