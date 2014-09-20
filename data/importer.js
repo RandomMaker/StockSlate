@@ -33,16 +33,18 @@ var dow_jones = [{symbol: 'MMM', name: '3M Co'},
                  {symbol: 'V', name: 'Visa Inc'},
                  {symbol: 'WMT', name: 'Wal-Mart Stores Inc'},
                  {symbol: 'DIS', name: 'Walt Disney Co'}];
+
 Stock.find({}).remove(function() {
     var stock;
     for (stock in dow_jones){
-        getQuotes(dow_jones[stock].symbol, function(quote){
+        getQuotes(dow_jones[stock].symbol, function(name, symbol, quote){
             Stock.create({
-                name: dow_jones[stock].name,
+                name: name,
+                symbol: symbol,
                 quote: quote
             }, function (err, stock) {
                 if (err) console.log(err);
-                console.log("success");
+                console.log("success: " + stock.symbol + ":" + stock.name);
                 return;
             });
         });
