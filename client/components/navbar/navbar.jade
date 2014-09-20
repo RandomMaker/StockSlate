@@ -30,5 +30,8 @@ div.navbar.navbar-default.navbar-static-top(ng-controller='NavbarCtrl')
           a(href='/settings')
             span.glyphicon.glyphicon-cog
 
+        li(ng-show='isLoggedIn()', ng-class='{active: isActive("/upload")}')
+          a(href='#') Background Upload
+
         li(ng-show='isLoggedIn()', ng-class='{active: isActive("/logout")}')
           a(href='', ng-click='logout()') Logout

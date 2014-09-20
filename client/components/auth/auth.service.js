@@ -96,7 +96,7 @@ angular.module('stockSlateApp')
         var cb = callback || angular.noop;
 
         return User.createList({ id: currentUser._id }, {
-          name: listName
+          list: listName
         }, function(list) {
           return cb(list);
         }, function(err) {

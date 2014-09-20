@@ -15,7 +15,7 @@ angular.module('stockSlateApp')
       createList: {
         method: 'PUT',
         params: {
-          controller:'name'
+          controller:'list'
         }
       },
       get: {
