@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 var StockSchema = new Schema({
   name: String,
+  symbol: String,
   quote: Array
 });
 
