@@ -9,10 +9,6 @@ var fs = require('fs');
 
 function getQuoteYear(symbol, year, cb){
 
-  // URL: http://query.yahooapis.com/v1/public/yql?format=json&
-  // q=select%20%2a%20from%20yahoo.finance.historicaldata%20
-  // where%20symbol%20in%20%28%27YHOO%27%29%20and%20startDate%20=%20%272009-09-11%27%20and%20endDate%20=%20%272010-03-10%27&
-  // diagnostics=true&env=store://datatables.org/alltableswithkeys
   var url = 'http://query.yahooapis.com/v1/public/yql';
   var startDate = year + '-01-01';
   var endDate = year+ 1 +'-01-01';
@@ -23,12 +19,16 @@ function getQuoteYear(symbol, year, cb){
 
   var request = url + '?q=' + query + "&env=http%3A%2F%2Fdatatables.org%2Falltables.env&diagnostics=true&format=json";
 
-  console.log(request);
+  // console.log(request);
   var xhr = new XMLHttpRequest();
   xhr.open("GET", request, true);
   xhr.onload = function(err) {
     var buffer = xhr.responseText;
     var json = JSON.parse(buffer);
+    if(json.query.results === null){
+      console.log("ERR " + JSON.stringify(json));
+      return;
+    }
     cb(json.query.results.quote);
   }
   xhr.onerror = function(err) {
@@ -39,7 +39,9 @@ function getQuoteYear(symbol, year, cb){
 }
 
 
-function getQuotes(symbol){
+function getQuotes(symbol, cb){
+
+  console.log("GET DATA FOR: " + symbol)
   // async too pro
   getQuoteYear(symbol, 2009, function (data) {
     getQuoteYear(symbol, 2010, function (data1) {
@@ -52,18 +54,17 @@ function getQuotes(symbol){
             data = data.concat(data4);
 
             data.sort(function(a,b){
-              // Turn your strings into dates, and then subtract them
-              // to get a value that is either negative, positive, or zero.
-
               return new Date(a['Date']) - new Date(b['Date']);
             });
+            /*
             fs.writeFile(symbol + '.json', JSON.stringify(data), function(err) {
                 if(err) {
                     console.log(err);
                 } else {
-                    console.log("The file was saved!");
+                    console.log(symbol + '.json was saved!');
                 }
-            });
+            });*/
+            cb(data);
           });
         });
       });
@@ -71,7 +72,4 @@ function getQuotes(symbol){
   });
 }
 
-getQuotes('YHOO');
 module.exports = getQuotes;
-
-
