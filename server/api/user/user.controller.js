@@ -34,6 +34,11 @@ exports.create = function (req, res, next) {
   });
 };
 
+exports.newList = function (req, res, next) {
+  var newList = req.body;
+
+};
+
 /**
  * Get a single user
  */

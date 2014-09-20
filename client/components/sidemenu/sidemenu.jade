@@ -1,0 +1,6 @@
+.col-md-2(ng-controller="SideMenuCtrl")
+  form(ng-submit="createNewList(getCurrentUser())")
+    input(type="text", placeholder="new list...", ng-model="listName")
+
+  ul.list-unstyled(ng-init="getLists()")
+    li(ng-repeat="list in stockLists")
