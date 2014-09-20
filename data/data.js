@@ -37,17 +37,26 @@ function getQuoteYear(symbol, year, cb){
   }
   xhr.send();
 }
+
+
 function getQuotes(symbol){
-  // -.- doc didn't say how to make sync call...
+  // async too pro
   getQuoteYear(symbol, 2009, function (data) {
     getQuoteYear(symbol, 2010, function (data1) {
       getQuoteYear(symbol, 2011, function (data2) {
         getQuoteYear(symbol, 2012, function (data3) {
           getQuoteYear(symbol, 2013, function (data4) {
-            data.push(data1);
-            data.push(data2);
-            data.push(data3);
-            data.push(data4);
+            data = data.concat(data1);
+            data = data.concat(data2);
+            data = data.concat(data3);
+            data = data.concat(data4);
+
+            data.sort(function(a,b){
+              // Turn your strings into dates, and then subtract them
+              // to get a value that is either negative, positive, or zero.
+
+              return new Date(a['Date']) - new Date(b['Date']);
+            });
             fs.writeFile(symbol + '.json', JSON.stringify(data), function(err) {
                 if(err) {
                     console.log(err);

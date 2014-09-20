@@ -43,7 +43,7 @@ var all = {
 
   google: {
     clientID:     process.env.GOOGLE_ID || 'id',
-    clientSecret: process.env.GOOGLE_SECRET || 'secret',
+    clientSecret: process.env.GOOGLE_SECRET || 'google-secret',
     callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback'
   }
 };
