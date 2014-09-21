@@ -34,7 +34,7 @@ table.table.stock-table(ng-init="columnNameSort = 'quote.BUFFETT_SCORE'; reverse
           td {{(stock.quote.EPS_GROWTH | number:2) || defaultText}}
           td {{(stock.quote.OPER_MARGIN | number:2) || defaultText}}
           td {{(stock.quote.PROF_MARGIN | number:2) || defaultText}}
-          td {{(stock.quote.RETURN_COM_EQI | number:2) || defaultText}}
+          td {{(stock.quote.RETURN_COM_EQY | number:2) || defaultText}}
           //- td 5.04
           td {{stock.quote.BUFFETT_SCORE | number:0}}
           td
