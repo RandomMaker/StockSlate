@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('stockSlateApp')
-  .controller('MainCtrl', function ($scope, $http, $rootScope) {
+  .controller('MainCtrl', function ($scope, $http, $rootScope, $filter) {
     $scope.investorProfile = '';
 
     $scope.getInclude = function() {
@@ -26,18 +26,63 @@ angular.module('stockSlateApp')
       }, {
         name: 'Facebook Inc.',
         symbol: 'FB'
+      }, {
+        name: 'Google Inc',
+        symbol: 'GOOGL'
+      }, {
+        name: 'Microsoft Corporation',
+        symbol: 'MSFT'
+      }, {
+        name: 'Hewlett Packard Company',
+        symbol: 'HPQ'
+      }, {
+        name: 'Intel Corporation',
+        symbol: 'INTC'
+      }, {
+        name: 'Blackberry Ltd',
+        symbol: 'BBRY'
       }]
     }, {
       name: 'Retail Stocks',
       stocks: [{
         name: "Target Corp",
         symbol: "TGT"
+      }, {
+        name: 'The Home Depot, Inc',
+        symbol: 'HD'
+      }, {
+        name: "Lowe's Companies Inc",
+        symbol: 'LOW'
+      }, {
+        name: 'Costco Wholesale Corporation',
+        symbol: 'COST'
+      }, {
+        name: 'Dollar General Corp',
+        symbol: 'DG'
+      }, {
+        name: 'Family Dollar Stores, Inc',
+        symbol: 'FDO'
       }]
     }, {
       name: 'Automotive Stocks',
       stocks: [{
         name: 'Tesla Motors Inc',
         symbol: 'TSLA'
+      }, {
+        name: 'Ford Motor Company',
+        symbol: 'F'
+      }, {
+        name: 'General Motors Company',
+        symbol: 'GM'
+      }, {
+        name: 'Toyota Motors Corp (ADR)',
+        symbol: "TM"
+      }, {
+        name: 'Honda Motor Co Ltd (ADR)',
+        symbol: 'HMC'
+      }, {
+        name: 'Tata Motors Ltd (ADR)',
+        symbol: 'TTM'
       }]
     }];
 
@@ -60,8 +105,10 @@ angular.module('stockSlateApp')
       name: 'Custom Growth Profile'
     }];
 
-    $scope.deleteStock = function(index) {
-      $rootScope.myStockLists[$scope.watchlistIndex].stocks.splice(index, 1);
+    $scope.deleteStock = function(symbol) {
+      // var myStockLists = $rootScope.myStockLists;
+      // var index = myStockLists[$scope.watchlistIndex].stocks.indexOf(myStockLists.stocks.symbol);
+      // myStockLists[$scope.watchlistIndex].stocks.splice(index, 1);
     };
 
     $scope.deleteList = function() {
