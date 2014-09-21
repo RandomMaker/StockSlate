@@ -1,50 +1,6 @@
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var fs = require('fs');
-
-/* getData: url (string) , cb (function)
-
-  Given the URL and call back, calls cb function with the parsed JSON
-*/
-
-var dow_jones = [{symbol: 'MMM', name: '3M Co'},
-                 {symbol: 'AXP', name: 'American Express Co'},
-                 {symbol: 'T', name: 'AT&T Inc'},
-                 {symbol: 'BA', name: 'Boeing Co'},
-                 {symbol: 'CAT', name: 'Caterpillar Inc'},
-                 {symbol: 'CVX', name: 'Chevron Corp'},
-                 {symbol: 'CSCO', name: 'Cisco Systems Inc'},
-                 {symbol: 'DD', name: 'E I du Pont de Nemours and Co'},
-                 {symbol: 'XOM', name: 'Exxon Mobil Corp'},
-                 {symbol: 'GE', name: 'General Electric Co'},
-                 {symbol: 'GS', name: 'Goldman Sachs Group Inc'},
-                 {symbol: 'HD', name: 'Home Depot Inc'},
-                 {symbol: 'INTC', name: 'Intel Corp'},
-                 {symbol: 'IBM', name: 'International Business Machine...'},
-                 {symbol: 'JNJ', name: 'Johnson & Johnson'},
-                 {symbol: 'JPM', name: 'JPMorgan Chase and Co'},
-                 {symbol: 'MCD', name: 'McDonald\'s Corp'},
-                 {symbol: 'MRK', name: 'Merck & Co Inc'},
-                 {symbol: 'MSFT', name: 'Microsoft Corp'},
-                 {symbol: 'NKE', name: 'Nike Inc'},
-                 {symbol: 'PFE', name: 'Pfizer Inc'},
-                 {symbol: 'PG', name: 'Procter & Gamble Co'},
-                 {symbol: 'KO', name: 'The Coca-Cola Co'},
-                 {symbol: 'TRV', name: 'Travelers Companies Inc'},
-                 {symbol: 'UTX', name: 'United Technologies Corp'},
-                 {symbol: 'UNH', name: 'UnitedHealth Group Inc'},
-                 {symbol: 'VZ', name: 'Verizon Communications Inc'},
-                 {symbol: 'V', name: 'Visa Inc'},
-                 {symbol: 'WMT', name: 'Wal-Mart Stores Inc'},
-                 {symbol: 'DIS', name: 'Walt Disney Co'}];
-
-function getName(symbol){
-    var stock;
-    for(stock in dow_jones){
-        if(dow_jones[stock].symbol === symbol)
-            return dow_jones[stock].name;
-    }
-    return '';
-}
+var getName = require('./getName');
 
 function getQuoteYear(symbol, year, cb){
 
@@ -97,6 +53,7 @@ function getQuotes(symbol, cb){
               quote.sort(function(a,b){
                 return new Date(a['Date']) - new Date(b['Date']);
               });
+              /*
               fs.writeFile(symbol + '.json', JSON.stringify(quote), function(err) {
                 if(err) {
                     console.log(err);
@@ -104,8 +61,11 @@ function getQuotes(symbol, cb){
                     console.log(symbol + '.json was saved!');
                 }
               });
-              console.log(symbol + "fetched");
-              cb(getName(symbol), symbol ,quote);
+              */
+              console.log(symbol + " fetched");
+              getName(symbol, function(longname){
+                 cb(longname, symbol, quote);
+              })
             });
           });
         });
