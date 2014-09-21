@@ -24,11 +24,14 @@ div.navbar.navbar-default.navbar-static-top(ng-controller='NavbarCtrl')
           a(href='/login') Login
 
         li(ng-show='isLoggedIn()')
-          p.navbar-text Hello {{ getCurrentUser().name }}
+          p.navbar-text Welcome {{ getCurrentUser().name }}
 
         li(ng-show='isLoggedIn()', ng-class='{active: isActive("/settings")}')
           a(href='/settings')
             span.glyphicon.glyphicon-cog
+
+        li(ng-show='isLoggedIn()', ng-class='{active: isActive("/upload")}')
+          a(href='#') Background Upload
 
         li(ng-show='isLoggedIn()', ng-class='{active: isActive("/logout")}')
           a(href='', ng-click='logout()') Logout

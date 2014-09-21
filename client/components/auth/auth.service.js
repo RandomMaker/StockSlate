@@ -92,6 +92,18 @@ angular.module('stockSlateApp')
         }).$promise;
       },
 
+      createList: function(listName, callback) {
+        var cb = callback || angular.noop;
+
+        return User.createList({ id: currentUser._id }, {
+          list: listName
+        }, function(list) {
+          return cb(list);
+        }, function(err) {
+          return cb(err);
+        }).$promise;
+      },
+
       /**
        * Gets all available info on authenticated user
        *

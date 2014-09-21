@@ -12,6 +12,12 @@ angular.module('stockSlateApp')
           controller:'password'
         }
       },
+      createList: {
+        method: 'PUT',
+        params: {
+          controller:'list'
+        }
+      },
       get: {
         method: 'GET',
         params: {

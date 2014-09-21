@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
+var stockSchema = require('../stock/stock.model');
 
 var UserSchema = new Schema({
   name: String,
@@ -16,7 +17,10 @@ var UserSchema = new Schema({
   provider: String,
   salt: String,
   google: {},
-  github: {}
+  lists: [{
+    name: String,
+    stocks: [stockSchema]
+   }]
 });
 
 /**
@@ -39,7 +43,8 @@ UserSchema
   .get(function() {
     return {
       'name': this.name,
-      'role': this.role
+      'role': this.role,
+      'lists': this.lists
     };
   });
 

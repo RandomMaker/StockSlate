@@ -34,6 +34,19 @@ exports.create = function (req, res, next) {
   });
 };
 
+
+
+exports.newList = function (req, res, next) {
+  var userId = req.params.id;
+  var listName = req.body;
+
+  User.findByIdAndUpdate(userId, {$push: {"lists": {name: listName}}},
+    {safe: true, upsert: true},
+    function(err, model) {
+        console.log(err);
+    });
+};
+
 /**
  * Get a single user
  */
