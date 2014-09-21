@@ -4,23 +4,9 @@ angular.module('stockSlateApp')
   .controller('MainCtrl', function ($scope, $http, Auth) {
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.getCurrentUser = Auth.getCurrentUser;
-
-    $scope.awesomeThings = [];
-
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-    });
-
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
-      }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
-    };
-
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
+    $scope.investorProfile = '';
+    $scope.getInclude = function() {
+      return 'components/' + $scope.investorProfile + '.html';
     };
 
     $scope.myStockLists = [{
@@ -37,9 +23,20 @@ angular.module('stockSlateApp')
       stocks: []
     }];
 
+    $scope.addNewList = function() {
+      if ($scope.newListName === '') return;
+      $scope.myStockLists.push({name: $scope.newListName, stocks: []});
+      $scope.newListName = '';
+    };
+
     $scope.myCustomProfiles = [{
-      name: 'Value Profile'
+      name: 'Custom Value Profile'
     }, {
-      name: 'Growth Profile'
-    }]
+      name: 'Custom Growth Profile'
+    }];
+
+    $http.get('/api/stocks').success(function(stocks){
+      $scope.allStocks = stocks;
+    });
   });
+// {{res | filter:val}}

@@ -6,7 +6,7 @@ header
               img.logo(src='/assets/images/logo.png')
             .top-menu
               ul
-                li Welcome Brandon
+                li Welcome Andrew
                 li
                   a(href='#') Background Upload
                 li
@@ -15,8 +15,8 @@ header
       .container
         .row
           .col-md-3.side-bar
-            form(action='#', method='post')
-              input.wider(type='text', placeholder='LIST NAME')
+            form(ng-submit='addNewList()')
+              input.wider(type='text', placeholder='LIST NAME', ng-model='newListName')
               input.plus-button(type='submit', value='+')
             h2 Watchlists
             .col-md12
@@ -33,30 +33,30 @@ header
             .col-md12
               .list-menu
                 ul
-                  li
+                  li(ng-click="investorProfile = 'graham'")
                     img.investor(src='/assets/images/graham.png')
-                    a(href='#') Benjamin Graham
+                    a(ng-class="{active : investorProfile === 'graham'}") Benjamin Graham
                     .tool-tip
                       a(href='#')
-                        i.fa.fa-info-circle.fa-2x(tooltip="Benjamin Graham is a world famous investor known for his value investing strategies.")
-                  li
+                        i.fa.fa-info-circle.fa-2x(tooltip-append-to-body='true', tooltip="Benjamin Graham is a world famous investor known for his value investing strategies.")
+                  li(ng-click="investorProfile = 'buffett'")
                     img.investor(src='/assets/images/buffett.png')
-                    a(href='#') Warren Buffett
+                    a(ng-class="{active : investorProfile === 'buffett'}") Warren Buffett
                     .tool-tip
                       a(href='#')
-                        i.fa.fa-info-circle.fa-2x(tooltip="Warren Edward Buffett is an American business magnate, investor and philanthropist. He was the most successful investor of the 20th century.")
-                  li
+                        i.fa.fa-info-circle.fa-2x(tooltip-append-to-body='true', tooltip="Warren Edward Buffett is an American business magnate, investor and philanthropist. He was the most successful investor of the 20th century.")
+                  li(ng-click="investorProfile = 'lynch'")
                     img.investor(src='/assets/images/lynch.png')
-                    a(href='#') Peter Lynch
+                    a(ng-class="{active : investorProfile === 'lynch'}") Peter Lynch
                     .tool-tip
                       a(href='#')
-                        i.fa.fa-info-circle.fa-2x(tooltip="Peter Lynch is an American businessman and stock investor. As part of his role at Fidelity Investments, he managed the Magellan Fund between 1977 and 1990 averaging a 29% return, making it the best 20-year return of any mutual fund over the period.")
-                  li
+                        i.fa.fa-info-circle.fa-2x(tooltip-append-to-body='true', tooltip="Peter Lynch is an American businessman and stock investor. As part of his role at Fidelity Investments, he managed the Magellan Fund between 1977 and 1990 averaging a 29% return, making it the best 20-year return of any mutual fund over the period.")
+                  li(ng-click="investorProfile = 'oneil'")
                     img.investor(src='/assets/images/oneil.png')
-                    a(href='#') William O'Neil
+                    a(ng-class="{active : investorProfile === 'oneil'}") William O'Neil
                     .tool-tip
                       a(href='#')
-                        i.fa.fa-info-circle.fa-2x(tooltip="William J. O'Neil is an American entrepreneur, stockbroker and writer, who founded the business newspaper Investor's Business Daily and the stock brokerage firm William O'Neil & Co. Inc.")
+                        i.fa.fa-info-circle.fa-2x(tooltip-append-to-body='true', tooltip="William J. O'Neil is an American entrepreneur, stockbroker and writer, who founded the business newspaper Investor's Business Daily and the stock brokerage firm William O'Neil & Co. Inc.")
                   li(ng-repeat="myProfile in myCustomProfiles")
                     img.investor(src='/assets/images/custom.png')
                     a(href='#') {{myProfile.name}}
@@ -66,71 +66,72 @@ header
             .row.stock-area
               .stock-header
                 h1 Pot Stocks
-                form(action='#', method='post')
-                  input.wider(type='text', placeholder='ADD STOCK')
-                  input.plus-button(type='submit', value='+')
-              table.table.stock-table.table-responsive
-                thead
-                  tr.uppercase.small-font.proxima-light
-                    th Company
-                    th Price
-                    th P/E
-                    th PEG
-                    th P/S
-                    th Prof M.
-                    th P/E
-                    th R/S
-                    th EBITDA
-                    th EPS
-                    th C.R
-                    th Score
-                tbody
-                  tr
-                    td Ambarella Inc.
-                    td 23.62
-                    td 17.32
-                    td 5.6
-                    td 13.32
-                    td 56%
-                    td 49.32
-                    td 5.65M
-                    td 4.53
-                    td 9.99
-                    td 99
-                    td 99
-                    td
-                      a(href='#')
-                        i.fa.fa-close
-                  tr
-                    td Apple Corporation
-                    td 23.62
-                    td 17.32
-                    td 5.6
-                    td 13.32
-                    td 56%
-                    td 49.32
-                    td 5.65M
-                    td 4.53
-                    td 9.99
-                    td 99
-                    td 99
-                    td
-                      a(href='#')
-                        i.fa.fa-close
-                  tr
-                    td Apple Corporation
-                    td 23.62
-                    td 17.32
-                    td 5.6
-                    td 13.32
-                    td 56%
-                    td 49.32
-                    td 5.65M
-                    td 4.53
-                    td 9.99
-                    td 99
-                    td 99
-                    td
-                      a(href='#')
-                        i.fa.fa-close
-              button.delete-list Delete List
+                form
+                  input(type="text", ng-model="selectedStock", placeholder="ADD STOCK", typeahead="stock as stock.symbol for stock in allStocks | filter:{name:$viewValue}", typeahead-loading="loadingLocations")
+                  i.glyphicon.glyphicon-refresh(ng-show="loadingLocations")
+              .table-responsive(ng-include="getInclude()")
+                table.table.stock-table
+                  thead
+                    tr.uppercase.small-font.proxima-light
+                      th Company
+                      th Price
+                      th P/E
+                      th PEG
+                      th P/S
+                      th Prof M.
+                      th P/E
+                      th R/S
+                      th EBITDA
+                      th EPS
+                      th C.R
+                      th Score
+                  tbody
+                    tr
+                      td Ambarella Inc.
+                      td 23.62
+                      td 17.32
+                      td 5.6
+                      td 13.32
+                      td 56%
+                      td 49.32
+                      td 5.65M
+                      td 4.53
+                      td 9.99
+                      td 99
+                      td 99
+                      td
+                        a(href='#')
+                          i.fa.fa-close
+                    tr
+                      td Apple Corporation
+                      td 23.62
+                      td 17.32
+                      td 5.6
+                      td 13.32
+                      td 56%
+                      td 49.32
+                      td 5.65M
+                      td 4.53
+                      td 9.99
+                      td 99
+                      td 99
+                      td
+                        a(href='#')
+                          i.fa.fa-close
+                    tr
+                      td Apple Corporation
+                      td 23.62
+                      td 17.32
+                      td 5.6
+                      td 13.32
+                      td 56%
+                      td 49.32
+                      td 5.65M
+                      td 4.53
+                      td 9.99
+                      td 99
+                      td 99
+                      td
+                        a(href='#')
+                          i.fa.fa-close
+              button.pull-right.delete-list.right-margin Delete List
