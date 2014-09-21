@@ -1,17 +1,29 @@
-table.table.stock-table.table-responsive
+table.table.stock-table(ng-init="columnNameSort = 'quote.LYNCH_SCORE'; reverseSort = true")
     thead
         tr.uppercase.small-font.proxima-light
-          th Company
-          th Price
+          th
+            a(ng-click="columnNameSort = 'name'; reverseSort = !reverseSort") Company
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'name', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'name'}")
+          th
+            a(ng-click="columnNameSort = 'quote.PX_LAST'; reverseSort = !reverseSort") Price
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.PX_LAST', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.PX_LAST'}")
           //- th PEG
-          th P/E
-          th EPS G.
+          th
+            a(ng-click="columnNameSort = 'quote.PE_RATIO'; reverseSort = !reverseSort") P/E
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.PE_RATIO', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.PE_RATIO'}")
+          th
+            a(ng-click="columnNameSort = 'quote.EPS_GROWTH'; reverseSort = !reverseSort") EPS G.
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.EPS_GROWTH', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.EPS_GROWTH'}")
           //- th Debt
           //- th I.O
-          th I.B
-          th Score
+          th
+            a(ng-click="columnNameSort = 'quote.NUM_INSIDERS_BUYING_SHARES'; reverseSort = !reverseSort") I.B
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.NUM_INSIDERS_BUYING_SHARES', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.NUM_INSIDERS_BUYING_SHARES'}")
+          th
+            a(ng-click="columnNameSort = 'quote.LYNCH_SCORE'; reverseSort = !reverseSort") Score
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.LYNCH_SCORE', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.LYNCH_SCORE'}")
       tbody
-        tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
+        tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks | orderBy:columnNameSort:reverseSort")
           td {{stock.name}}
           td {{(stock.quote.PX_LAST | number:2) || defaultText}}
           //- td {{stock.}}
@@ -20,7 +32,7 @@ table.table.stock-table.table-responsive
           //- td 0.12
           //- td {{stock.quote. | number:2}}
           td {{(stock.quote.NUM_INSIDERS_BUYING_SHARES | number:2) || 0}}
-          td 65
+          td {{stock.quote.LYNCH_SCORE | number:0}}
           td
             a(ng-click="deleteStock($index)")
               i.fa.fa-close

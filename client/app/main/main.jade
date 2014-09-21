@@ -74,18 +74,36 @@ header
                 table.table.stock-table
                   thead
                     tr.uppercase.small-font.proxima-light
-                      th Company
-                      th Price
-                      th P/E
+                      th
+                        a(ng-click="columnNameSort = 'name'; reverseSort = !reverseSort") Company
+                        i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'name', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'name'}")
+                      th
+                        a(ng-click="columnNameSort = 'quote.PX_LAST'; reverseSort = !reverseSort") Price
+                        i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.PX_LAST', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.PX_LAST'}")
+                      th
+                        a(ng-click="columnNameSort = 'quote.PE_RATIO'; reverseSort = !reverseSort") P/E
+                        i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.PE_RATIO', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.PE_RATIO'}")
                       //- th PEG
-                      th P/S
-                      th Prof M.
-                      th R/S
-                      th EBITDA
-                      th EPS
-                      th C.R
+                      th
+                        a(ng-click="columnNameSort = 'quote.PX_TO_SALES_RATIO'; reverseSort = !reverseSort") P/S
+                        i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.PX_TO_SALES_RATIO', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.PX_TO_SALES_RATIO'}")
+                      th
+                        a(ng-click="columnNameSort = 'quote.PROF_MARGIN'; reverseSort = !reverseSort") Prof M.
+                        i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.PROF_MARGIN', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.PROF_MARGIN'}")
+                      th
+                        a(ng-click="columnNameSort = 'quote.REVENUE_PER_SH'; reverseSort = !reverseSort") R/S
+                        i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.REVENUE_PER_SH', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.REVENUE_PER_SH'}")
+                      th
+                        a(ng-click="columnNameSort = 'quote.EBITDA'; reverseSort = !reverseSort") EBITDA
+                        i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.EBITDA', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.EBITDA'}")
+                      th
+                        a(ng-click="columnNameSort = 'quote.IS_EPS'; reverseSort = !reverseSort") EPS
+                        i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.IS_EPS', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.IS_EPS'}")
+                      th
+                        a(ng-click="columnNameSort = 'quote.CUR_RATIO'; reverseSort = !reverseSort") C.R
+                        i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.CUR_RATIO', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.CUR_RATIO'}")
                   tbody
-                    tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
+                    tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks | orderBy:columnNameSort:reverseSort")
                       td {{stock.name}}
                       td {{(stock.quote.PX_LAST | number:2) || defaultText}}
                       td {{(stock.quote.PE_RATIO | number:2) || 0}}

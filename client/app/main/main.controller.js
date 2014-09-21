@@ -41,6 +41,9 @@ angular.module('stockSlateApp')
       }]
     }];
 
+    $scope.columnNameSort = 'name';
+    $scope.reverseSort = false;
+
     $scope.defaultText = 'N/A';
 
     $scope.addNewList = function() {

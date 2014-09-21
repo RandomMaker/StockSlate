@@ -1,28 +1,46 @@
-table.table.stock-table
+table.table.stock-table(ng-init="columnNameSort = 'quote.GRAHAM_SCORE'; reverseSort = true")
     thead
         tr.uppercase.small-font.proxima-light
-          th Company
-          th Price
+          th
+            a(ng-click="columnNameSort = 'name'; reverseSort = !reverseSort") Company
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'name', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'name'}")
+          th
+            a(ng-click="columnNameSort = 'quote.PX_LAST'; reverseSort = !reverseSort") Price
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.PX_LAST', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.PX_LAST'}")
           //- th C.A - Debt
-          th C.R
-          th EPS
-          th EPS G.
-          th P/E
-          th P/B
-          th Dividend
-          th Score
+          th
+            a(ng-click="columnNameSort = 'quote.CUR_RATIO'; reverseSort = !reverseSort") C.R
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.CUR_RATIO', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.CUR_RATIO'}")
+          th
+            a(ng-click="columnNameSort = 'quote.IS_EPS'; reverseSort = !reverseSort") EPS
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.IS_EPS', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.IS_EPS'}")
+          th
+            a(ng-click="columnNameSort = 'quote.EPS_GROWTH'; reverseSort = !reverseSort") EPS G.
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.EPS_GROWTH', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.EPS_GROWTH'}")
+          th
+            a(ng-click="columnNameSort = 'quote.PE_RATIO'; reverseSort = !reverseSort") P/E
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.PE_RATIO', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.PE_RATIO'}")
+          th
+            a(ng-click="columnNameSort = 'quote.BEST_PX_BPS_RATIO'; reverseSort = !reverseSort") P/B
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.BEST_PX_BPS_RATIO', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.BEST_PX_BPS_RATIO'}")
+          th
+            a(ng-click="columnNameSort = 'quote.DIVIDEND_YIELD'; reverseSort = !reverseSort") Dividend
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.DIVIDEND_YIELD', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.DIVIDEND_YIELD'}")
+          th
+            a(ng-click="columnNameSort = 'quote.GRAHAM_SCORE'; reverseSort = !reverseSort") Score
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.GRAHAM_SCORE', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.GRAHAM_SCORE'}")
       tbody
-        tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
+        tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks | orderBy:columnNameSort:reverseSort")
           td {{stock.name}}
           td {{(stock.quote.PX_LAST | number:2) || defaultText}}
           //- td {{2.36}}
           td {{(stock.quote.CUR_RATIO | number:2) || defaultText}}
           td {{(stock.quote.IS_EPS | number:2) || defaultText}}
-          td {{(stock.quote.EPS_GROWtd | number:2) || defaultText}}
+          td {{(stock.quote.EPS_GROWTH | number:2) || defaultText}}
           td {{(stock.quote.PE_RATIO | number:2) || defaultText}}
           td {{(stock.quote.BEST_PX_BPS_RATIO | number:2) || defaultText}}
           td {{(stock.quote.DIVIDEND_YIELD | number:2) || 0}}%
-          td 39
+          td {{stock.quote.GRAHAM_SCORE | number:0}}
           td
             a(ng-click="deleteStock($index)")
               i.fa.fa-close

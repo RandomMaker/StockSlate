@@ -1,22 +1,34 @@
-table.table.stock-table.table-responsive
+table.table.stock-table(ng-init="columnNameSort = 'quote.ONEIL_SCORE'; reverseSort = true")
     thead
         tr.uppercase.small-font.proxima-light
-          th Company
-          th Price
-          th EPS
-          th EPS G.
-          th 52 Week High
+          th
+            a(ng-click="columnNameSort = 'name'; reverseSort = !reverseSort") Company
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'name', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'name'}")
+          th
+            a(ng-click="columnNameSort = 'quote.PX_LAST'; reverseSort = !reverseSort") Price
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.PX_LAST', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.PX_LAST'}")
+          th
+            a(ng-click="columnNameSort = 'quote.IS_EPS'; reverseSort = !reverseSort") EPS
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.IS_EPS', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.IS_EPS'}")
+          th
+            a(ng-click="columnNameSort = 'quote.EPS_GROWTH'; reverseSort = !reverseSort") EPS G.
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.EPS_GROWTH', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.EPS_GROWTH'}")
+          th
+            a(ng-click="columnNameSort = 'quote.HIGH_52WEEK'; reverseSort = !reverseSort") 52 Week High
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.HIGH_52WEEK', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.HIGH_52WEEK'}")
           //- th I.O
-          th Score
+          th
+            a(ng-click="columnNameSort = 'quote.ONEIL_SCORE'; reverseSort = !reverseSort") Score
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': !reverseSort && columnNameSort === 'quote.ONEIL_SCORE', 'glyphicon-chevron-up': reverseSort && columnNameSort === 'quote.ONEIL_SCORE'}")
       tbody
-        tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
+        tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks | orderBy:columnNameSort:reverseSort")
           td {{stock.name}}
           td {{(stock.quote.PX_LAST | number:2) || defaultText}}
           td {{(stock.quote.IS_EPS | number:2) || defaultText}}
           td {{(stock.quote.EPS_GROWTH | number:2) || defaultText}}
           td {{(stock.quote.HIGH_52WEEK | number:2) || defaultText}}
           //- td 5.96
-          td 39
+          td {{stock.quote.ONEIL_SCORE | number:0}}
           td
             a(ng-click="deleteStock($index)")
               i.fa.fa-close
