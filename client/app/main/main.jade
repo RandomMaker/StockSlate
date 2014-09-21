@@ -65,7 +65,7 @@ header
           .col-md-9
             .row.stock-area
               .stock-header
-                h1 {{myStockLists[watchlistIndex].name}}
+                h1 {{myStockLists[watchlistIndex].name}} <!--{{investorProfile === '' ? '' : '-' + investorProfile | uppercase}}-->
                 form
                   input(type="text", ng-model="selectedStock", placeholder="ADD STOCK", typeahead="stock as stock.name for stock in allStocks | filter:$viewValue", typeahead-loading="loadingLocations", typeahead-on-select="onTypeAheadSelect($item, $model, $label)")
                   i.glyphicon.glyphicon-refresh(ng-show="loadingLocations")
@@ -87,16 +87,16 @@ header
                   tbody
                     tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
                       td {{stock.name}}
-                      td {{stock.quote.PX_LAST | number:2 || "N/A"}}
-                      td {{stock.quote.PE_RATIO | number:2 || 0}}
+                      td {{(stock.quote.PX_LAST | number:2) || defaultText}}
+                      td {{(stock.quote.PE_RATIO | number:2) || 0}}
                       //- td {{stock.quote.}}
-                      td {{stock.quote.PX_TO_SALES_RATIO | number:2 || "N/A"}}
-                      td {{stock.quote.PROF_MARGIN | number:2 || "N/A"}}
-                      td {{stock.quote.REVENUE_PER_SH | number:2 || "N/A"}}
-                      td {{stock.quote.EBITDA | number:2 || "N/A"}}
-                      td {{stock.quote.IS_EPS | number:2 || "N/A"}}
-                      td {{stock.quote.CUR_RATIO | number:2 || "N/A"}}
+                      td {{(stock.quote.PX_TO_SALES_RATIO | number:2) || defaultText}}
+                      td {{(stock.quote.PROF_MARGIN | number:2) || defaultText}}
+                      td {{(stock.quote.REVENUE_PER_SH | number:2) || defaultText}}
+                      td {{(stock.quote.EBITDA | number:2) || defaultText}}
+                      td {{(stock.quote.IS_EPS | number:2) || defaultText}}
+                      td {{(stock.quote.CUR_RATIO | number:2) || defaultText}}
                       td
                         a(ng-click="deleteStock($index)")
                           i.fa.fa-close
-              button.pull-right.delete-list.right-margin Delete List
+              button.pull-right.delete-list.right-margin(ng-click="deleteList()") Delete List

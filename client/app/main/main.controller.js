@@ -1,9 +1,7 @@
 'use strict';
 
 angular.module('stockSlateApp')
-  .controller('MainCtrl', function ($scope, $http, Auth, $rootScope) {
-    $scope.isLoggedIn = Auth.isLoggedIn;
-    $scope.getCurrentUser = Auth.getCurrentUser;
+  .controller('MainCtrl', function ($scope, $http, $rootScope) {
     $scope.investorProfile = '';
 
     $scope.getInclude = function() {
@@ -43,8 +41,10 @@ angular.module('stockSlateApp')
       }]
     }];
 
+    $scope.defaultText = 'N/A';
+
     $scope.addNewList = function() {
-      if ($scope.newListName === '') return;
+      if ($scope.newListName === '' || !$scope.newListName) return;
       $rootScope.myStockLists.push({name: $scope.newListName, stocks: []});
       $scope.newListName = '';
       $scope.watchlistIndex = $rootScope.myStockLists.length - 1;
@@ -61,8 +61,12 @@ angular.module('stockSlateApp')
       $rootScope.myStockLists[$scope.watchlistIndex].stocks.splice(index, 1);
     };
 
+    $scope.deleteList = function() {
+      $rootScope.myStockLists.splice($scope.watchlistIndex, 1);
+      $scope.setWatchlistIndex(0);
+    };
+
     $scope.onTypeAheadSelect = function(item, model, label) {
-      console.log(item);
       $rootScope.myStockLists[$scope.watchlistIndex].stocks.push({name: item.name, quote: item.quote[0], symbol: item.symbol});
       $scope.selectedStock = '';
     };
@@ -76,7 +80,6 @@ angular.module('stockSlateApp')
         for (var j = 0; j < myStockLists[i].stocks.length; j++) {
           for (var k = 0; k < stocks.length; k++) {
             if (myStockLists[i].stocks[j].symbol === stocks[k].symbol) {
-              console.log(myStockLists[i].stocks);
               myStockLists[i].stocks[j].quote = stocks[k].quote[0];
             }
           }
