@@ -67,7 +67,7 @@ header
               .stock-header
                 h1 {{myStockLists[watchlistIndex].name}}
                 form
-                  input(type="text", ng-model="selectedStock", placeholder="ADD STOCK", typeahead="stock as stock.symbol for stock in allStocks | filter:{name:$viewValue}", typeahead-loading="loadingLocations")
+                  input(type="text", ng-model="selectedStock", placeholder="ADD STOCK", typeahead="stock as stock.name for stock in allStocks | filter:$viewValue", typeahead-loading="loadingLocations", typeahead-on-select="onTypeAheadSelect($item, $model, $label)")
                   i.glyphicon.glyphicon-refresh(ng-show="loadingLocations")
               .table-responsive(ng-include="getInclude()")
               .table-responsive(ng-if="investorProfile === ''")
@@ -85,7 +85,6 @@ header
                       th EBITDA
                       th EPS
                       th C.R
-                      th Score
                   tbody
                     tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
                       td {{stock.name}}
@@ -99,8 +98,7 @@ header
                       td 4.53
                       td 9.99
                       td 99
-                      td 99
                       td
-                        a(href='#')
+                        a(ng-click="deleteStock($index)")
                           i.fa.fa-close
               button.pull-right.delete-list.right-margin Delete List

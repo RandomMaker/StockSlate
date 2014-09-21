@@ -49,15 +49,24 @@ angular.module('stockSlateApp')
       name: 'Custom Growth Profile'
     }];
 
+    $scope.deleteStock = function(index) {
+      $rootScope.myStockLists[$scope.watchlistIndex].stocks.splice(index, 1);
+    };
+
+    $scope.onTypeAheadSelect = function(item, model, label) {
+      console.log(item);
+      $rootScope.myStockLists[$scope.watchlistIndex].stocks.push({name: item.name, quote: item.quote[0], symbol: item.symbol});
+      $scope.selectedStock = '';
+    };
+
     $http.get('/api/stocks').success(function(stocks) {
       var listIndex = $scope.watchlistIndex;
       var myStockLists = $rootScope.myStockLists;
+      $scope.allStocks = stocks;
 
       for (var i = 0; i < myStockLists.length; i++) {
         for (var j = 0; j < myStockLists[i].stocks.length; j++) {
           for (var k = 0; k < stocks.length; k++) {
-            // console.log(stocks[k]);
-            // if (!stocks[k]) continue;
             if (myStockLists[i].stocks[j].symbol === stocks[k].symbol) {
               console.log(myStockLists[i].stocks);
               myStockLists[i].stocks[j].quote =  stocks[k].quote[0];
@@ -65,14 +74,5 @@ angular.module('stockSlateApp')
           }
         }
       }
-
-
-      // for (stock in stocks) {
-      //   for (myStock in myStockLists) {
-      //     if (myStockLists[myStock].symbol === stocks[stock].symbol) {
-      //       myStockLists.push({quote: stocks[stock].quote[0]});
-      //     }
-      //   }
-      // }
     });
   });
