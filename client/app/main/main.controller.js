@@ -63,7 +63,7 @@ angular.module('stockSlateApp')
       var listIndex = $scope.watchlistIndex;
       var myStockLists = $rootScope.myStockLists;
       $scope.allStocks = stocks;
-
+      //XXX super mega evil hack:
       for (var i = 0; i < myStockLists.length; i++) {
         for (var j = 0; j < myStockLists[i].stocks.length; j++) {
           for (var k = 0; k < stocks.length; k++) {

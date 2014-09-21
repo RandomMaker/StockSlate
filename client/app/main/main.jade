@@ -77,10 +77,9 @@ header
                       th Company
                       th Price
                       th P/E
-                      th PEG
+                      //- th PEG
                       th P/S
                       th Prof M.
-                      th P/E
                       th R/S
                       th EBITDA
                       th EPS
@@ -88,16 +87,15 @@ header
                   tbody
                     tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
                       td {{stock.name}}
-                      td {{stock.quote.PX_LAST}}
-                      td {{stock.quote.PE_RATIO || 0}}
-                      td {{}}
-                      td 13.32
-                      td 56%
-                      td 49.32
-                      td 5.65M
-                      td 4.53
-                      td 9.99
-                      td 99
+                      td {{stock.quote.PX_LAST | number:2}}
+                      td {{stock.quote.PE_RATIO | number:2 || 0}}
+                      //- td {{stock.quote.}}
+                      td {{stock.quote.PX_TO_SALES_RATIO | number:2}}
+                      td {{stock.quote.PROF_MARGIN | number:2}}
+                      td {{stock.quote.REVENUE_PER_SH | number:2}}
+                      td {{stock.quote.EBITDA | number:2}}
+                      td {{stock.quote.IS_EPS | number:2}}
+                      td {{stock.quote.CUR_RATIO | number:2}}
                       td
                         a(ng-click="deleteStock($index)")
                           i.fa.fa-close

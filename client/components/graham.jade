@@ -3,7 +3,7 @@ table.table.stock-table
         tr.uppercase.small-font.proxima-light
           th Company
           th Price
-          th C.A - Debt
+          //- th C.A - Debt
           th C.R
           th EPS
           th EPS G.
@@ -12,45 +12,17 @@ table.table.stock-table
           th Dividend
           th Score
       tbody
-        tr
-          td Ambarella Inc.
-          td 23.62
-          td 2.36
-          th 1.47
-          th 5.96
-          th 0.12
-          th 16.49
-          th 5.04
-          th 0.018
+        tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
+          td {{stock.name}}
+          td {{stock.quote.PX_LAST | number:2}}
+          //- td {{2.36}}
+          th {{stock.quote.CUR_RATIO | number:2}}
+          th {{stock.quote.IS_EPS | number:2}}
+          th {{stock.quote.EPS_GROWTH | number:2}}
+          th {{stock.quote.PE_RATIO | number:2}}
+          th {{stock.quote.BEST_PX_BPS_RATIO | number:2}}
+          th {{stock.quote.DIVIDEND_YIELD | number:2 || 0}}
           th 39
-          td
-            a(href='#')
-              i.fa.fa-close
-        tr
-          td Apple Corporation
-          td 98.62
-          td 2.36
-          th 1.47
-          th 5.96
-          th 0.12
-          th 16.49
-          th 5.04
-          th 0.018
-          th 99
-          td
-            a(href='#')
-              i.fa.fa-close
-        tr
-          td Google Inc.
-          td 512.62
-          td 2.36
-          th 1.47
-          th 5.96
-          th 0.12
-          th 16.49
-          th 5.04
-          th 0.018
-          th 22
           td
             a(href='#')
               i.fa.fa-close

@@ -8,19 +8,19 @@ table.table.stock-table
           th O.M
           th N.P.M
           th ROE
-          th Debt
+          //- th Debt
           th Score
       tbody
         tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
           td {{stock.name}}
-          td 23.62
-          td 2.36
-          th 1.47
-          th 5.96
-          th 0.12
-          th 16.49
-          th 5.04
+          td {{stock.quote.PX_LAST | number:2}}
+          td {{stock.quote.IS_EPS | number:2}}
+          th {{stock.quote.EPS_GROWTH | number:2}}
+          th {{stock.quote.OPER_MARGIN | number:2}}
+          th {{stock.quote.PROF_MARGIN | number:2}}
+          th {{stock.quote.RETURN_COM_EQI | number:2}}
+          //- th 5.04
           th 69
           td
-            a(href='#')
+            a(ng-click="deleteStock($index)")
               i.fa.fa-close

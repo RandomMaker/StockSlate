@@ -4,37 +4,19 @@ table.table.stock-table.table-responsive
           th Company
           th Price
           th EPS
+          th EPS G.
           th 52 Week High
-          th I.O
+          //- th I.O
           th Score
       tbody
-        tr
-          td Ambarella Inc.
-          td 23.62
-          td 2.36
-          th 1.47
-          th 5.96
-          th 39
+        tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
+          td {{stock.name}}
+          td {{stock.quote.PX_LAST | number:2}}
+          td {{stock.quote.IS_EPS | number:2}}
+          td {{stock.quote.EPS_GROWTH | number:2}}
+          td {{stock.quote.HIGH_52WEEK | number:2}}
+          //- td 5.96
+          td 39
           td
-            a(href='#')
-              i.fa.fa-close
-        tr
-          td Apple Corporation
-          td 98.62
-          td 2.36
-          th 1.47
-          th 5.96
-          th 99
-          td
-            a(href='#')
-              i.fa.fa-close
-        tr
-          td Google Inc.
-          td 512.62
-          td 2.36
-          th 1.47
-          th 5.96
-          th 22
-          td
-            a(href='#')
+            a(ng-click="deleteStock($index)")
               i.fa.fa-close
