@@ -14,15 +14,15 @@ table.table.stock-table
       tbody
         tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
           td {{stock.name}}
-          td {{stock.quote.PX_LAST | number:2}}
+          td {{stock.quote.PX_LAST | number:2 || "N/A"}}
           //- td {{2.36}}
-          th {{stock.quote.CUR_RATIO | number:2}}
-          th {{stock.quote.IS_EPS | number:2}}
-          th {{stock.quote.EPS_GROWTH | number:2}}
-          th {{stock.quote.PE_RATIO | number:2}}
-          th {{stock.quote.BEST_PX_BPS_RATIO | number:2}}
-          th {{stock.quote.DIVIDEND_YIELD | number:2 || 0}}
+          th {{stock.quote.CUR_RATIO | number:2 || "N/A"}}
+          th {{stock.quote.IS_EPS | number:2 || "N/A"}}
+          th {{stock.quote.EPS_GROWTH | number:2 || "N/A"}}
+          th {{stock.quote.PE_RATIO | number:2 || "N/A"}}
+          th {{stock.quote.BEST_PX_BPS_RATIO | number:2 || "N/A"}}
+          th {{stock.quote.DIVIDEND_YIELD | number:2 || 0}}%
           th 39
           td
-            a(href='#')
+            a(ng-click="deleteStock($index)")
               i.fa.fa-close

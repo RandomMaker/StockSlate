@@ -11,9 +11,9 @@ table.table.stock-table.table-responsive
       tbody
         tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
           td {{stock.name}}
-          td {{stock.quote.PX_LAST | number:2}}
-          td {{stock.quote.IS_EPS | number:2}}
-          td {{stock.quote.EPS_GROWTH | number:2}}
+          td {{stock.quote.PX_LAST | number:2 || "N/A"}}
+          td {{stock.quote.IS_EPS | number:2 || "N/A"}}
+          td {{stock.quote.EPS_GROWTH | number:2 || "N/A"}}
           td {{stock.quote.HIGH_52WEEK | number:2}}
           //- td 5.96
           td 39

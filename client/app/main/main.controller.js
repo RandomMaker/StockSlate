@@ -25,22 +25,30 @@ angular.module('stockSlateApp')
       }, {
         name: 'Cisco Systems Inc',
         symbol: 'CSCO'
+      }, {
+        name: 'Facebook Inc.',
+        symbol: 'FB'
       }]
     }, {
-      name: 'Restaurant Stocks',
+      name: 'Retail Stocks',
       stocks: [{
-        name: "McDonald's",
-        symbol: "MCD"
+        name: "Target Corp",
+        symbol: "TGT"
       }]
     }, {
-      name: 'Telecom Stocks',
-      stocks: []
+      name: 'Automotive Stocks',
+      stocks: [{
+        name: 'Tesla Motors Inc',
+        symbol: 'TSLA'
+      }]
     }];
 
     $scope.addNewList = function() {
       if ($scope.newListName === '') return;
       $rootScope.myStockLists.push({name: $scope.newListName, stocks: []});
       $scope.newListName = '';
+      $scope.watchlistIndex = $rootScope.myStockLists.length - 1;
+      $scope.investorProfile = '';
     };
 
     $scope.myCustomProfiles = [{
@@ -69,7 +77,7 @@ angular.module('stockSlateApp')
           for (var k = 0; k < stocks.length; k++) {
             if (myStockLists[i].stocks[j].symbol === stocks[k].symbol) {
               console.log(myStockLists[i].stocks);
-              myStockLists[i].stocks[j].quote =  stocks[k].quote[0];
+              myStockLists[i].stocks[j].quote = stocks[k].quote[0];
             }
           }
         }

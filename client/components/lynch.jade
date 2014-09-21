@@ -13,10 +13,10 @@ table.table.stock-table.table-responsive
       tbody
         tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
           td {{stock.name}}
-          td {{stock.quote.PX_LAST | number:2}}
+          td {{stock.quote.PX_LAST | number:2 || "N/A"}}
           //- td {{stock.}}
-          td {{stock.quote.PE_RATIO | number:2}}
-          td {{stock.quote.EPS_GROWTH | number:2}}
+          td {{stock.quote.PE_RATIO | number:2 || "N/A"}}
+          td {{stock.quote.EPS_GROWTH | number:2 || "N/A"}}
           //- td 0.12
           //- td {{stock.quote. | number:2}}
           td {{stock.quote.NUM_INSIDERS_BUYING_SHARES | number:2 || 0}}
