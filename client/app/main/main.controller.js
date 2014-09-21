@@ -23,8 +23,8 @@ angular.module('stockSlateApp')
         name: 'Apple Inc.',
         symbol: 'AAPL'
       }, {
-        name: 'IBM',
-        symbol: 'IBM'
+        name: 'Cisco Systems Inc',
+        symbol: 'CSCO'
       }]
     }, {
       name: 'Restaurant Stocks',
@@ -49,16 +49,30 @@ angular.module('stockSlateApp')
       name: 'Custom Growth Profile'
     }];
 
-    $http.get('/api/stocks').success(function(stocks){
-      var stock, myStock;
+    $http.get('/api/stocks').success(function(stocks) {
       var listIndex = $scope.watchlistIndex;
-      var watchlistsStocks = $rootScope.myStockLists[listIndex].stocks;
-      for (stock in stocks) {
-        for (myStock in watchlistsStocks) {
-          if (watchlistsStocks[myStock].symbol === stocks[stock].symbol) {
-            watchlistsStocks.push({quote: stocks[stock].quote[0]});
+      var myStockLists = $rootScope.myStockLists;
+
+      for (var i = 0; i < myStockLists.length; i++) {
+        for (var j = 0; j < myStockLists[i].stocks.length; j++) {
+          for (var k = 0; k < stocks.length; k++) {
+            // console.log(stocks[k]);
+            // if (!stocks[k]) continue;
+            if (myStockLists[i].stocks[j].symbol === stocks[k].symbol) {
+              console.log(myStockLists[i].stocks);
+              myStockLists[i].stocks[j].quote =  stocks[k].quote[0];
+            }
           }
         }
       }
+
+
+      // for (stock in stocks) {
+      //   for (myStock in myStockLists) {
+      //     if (myStockLists[myStock].symbol === stocks[stock].symbol) {
+      //       myStockLists.push({quote: stocks[stock].quote[0]});
+      //     }
+      //   }
+      // }
     });
   });

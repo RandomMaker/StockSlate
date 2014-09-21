@@ -90,8 +90,8 @@ header
                     tr(ng-repeat="stock in myStockLists[watchlistIndex].stocks track by $index")
                       td {{stock.name}}
                       td {{stock.quote.PX_LAST}}
-                      td 17.32
-                      td 5.6
+                      td {{stock.quote.PE_RATIO || 0}}
+                      td {{}}
                       td 13.32
                       td 56%
                       td 49.32
