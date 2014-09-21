@@ -1,23 +1,37 @@
 'use strict';
 
 angular.module('stockSlateApp')
-  .controller('MainCtrl', function ($scope, $http, Auth) {
+  .controller('MainCtrl', function ($scope, $http, Auth, $rootScope) {
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.getCurrentUser = Auth.getCurrentUser;
     $scope.investorProfile = '';
+
     $scope.getInclude = function() {
       return 'components/' + $scope.investorProfile + '.html';
     };
 
-    $scope.myStockLists = [{
+    $scope.watchlistIndex = 0;
+
+    $scope.setWatchlistIndex = function(index) {
+      $scope.watchlistIndex = index;
+      $scope.investorProfile = '';
+    };
+
+    $rootScope.myStockLists = [{
       name: 'Technology Stocks',
-      stocks: []
+      stocks: [{
+        name: 'Apple Inc.',
+        symbol: 'AAPL'
+      }, {
+        name: 'IBM',
+        symbol: 'IBM'
+      }]
     }, {
       name: 'Restaurant Stocks',
-      stocks: []
-    }, {
-      name: 'Pot Stocks',
-      stocks: []
+      stocks: [{
+        name: "McDonald's",
+        symbol: "MCD"
+      }]
     }, {
       name: 'Telecom Stocks',
       stocks: []
@@ -25,7 +39,7 @@ angular.module('stockSlateApp')
 
     $scope.addNewList = function() {
       if ($scope.newListName === '') return;
-      $scope.myStockLists.push({name: $scope.newListName, stocks: []});
+      $rootScope.myStockLists.push({name: $scope.newListName, stocks: []});
       $scope.newListName = '';
     };
 
@@ -36,7 +50,15 @@ angular.module('stockSlateApp')
     }];
 
     $http.get('/api/stocks').success(function(stocks){
-      $scope.allStocks = stocks;
+      var stock, myStock;
+      var listIndex = $scope.watchlistIndex;
+      var watchlistsStocks = $rootScope.myStockLists[listIndex].stocks;
+      for (stock in stocks) {
+        for (myStock in watchlistsStocks) {
+          if (watchlistsStocks[myStock].symbol === stocks[stock].symbol) {
+            watchlistsStocks.push({quote: stocks[stock].quote[0]});
+          }
+        }
+      }
     });
   });
-// {{res | filter:val}}
