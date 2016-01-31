@@ -1,6 +1,5 @@
 #StockSlate
 ##Hack the North 2014 Bloomberg API Prize Winner
-==========
 
 StockSlate analyzes equity stock picks with score algorithms to mimic the values of famous investors including Warren Buffett, Benjamin Graham, and Peter Lynch. Data is provided with the Bloomberg API and used within a NodeJS backend and AngularJS front end.
 
