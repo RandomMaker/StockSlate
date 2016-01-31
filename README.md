@@ -21,3 +21,8 @@ Check out our [video demo on YouTube](https://youtu.be/juY4bwJXMVE)! Due to the 
 
 ##Official Hack the North Submission
 - [StockSlate on DevPost](http://devpost.com/software/stock-slate)
+
+##Other Media
+- ["3 Ways Hack the North Improved our Startup"](http://andrewparadi.com/blog/3-ways-hack-the-north-improved-our-startup/) - Andrew Paradi
+- ["Launchpad meets Hack the North: 3 Hypotheses We Tested While Hacking"](http://andrewparadi.com/blog/launchpad-meets-hack-north-3-hypotheses-tested-hacking/) - Andrew Paradi
+
